@@ -3,7 +3,7 @@ import mariadb as db
 
 
 class BlogActions:
-
+    # function to select content from database and print them
     def view_blog():
         conn = db.connect(user=dbcreds.user,
                           password=dbcreds.password,
@@ -22,6 +22,7 @@ class BlogActions:
         for blog_post in blog_posts:
             print(blog_post[0])
 
+    #function to insert new entry into database
     def submit_blog(username):
         conn = db.connect(user=dbcreds.user,
                           password=dbcreds.password,

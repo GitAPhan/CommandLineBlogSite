@@ -1,6 +1,6 @@
 import dbi as d
 
-# Exception to catch if username exceeds 100char
+# Exception: username exceeds 100char
 class UsernameTooLong(Exception):
     pass
 
@@ -13,6 +13,8 @@ while True:
     try:
         # username prompt
         username = input('Enter your username: ')
+
+        # conditional to determine if username entered is too long
         if len(username) > 100:
             raise UsernameTooLong
         else:
@@ -26,6 +28,7 @@ print('Hello,', username)
 print("")
 print('---------------------')
 
+# loop
 while True:
     # options prompt
     print('You have 3 options')
@@ -44,11 +47,13 @@ while True:
     print('---------------------')
     print("")
 
+    # conditional to determine if function requires argument of username
     try:    
         if selection is '1':
             options[selection](username)
         else:
             options[selection]()
+    # this will catch any errors if the user enters anything other than the available inputs
     except KeyError:
         print('please enter valid selection')
     print("")

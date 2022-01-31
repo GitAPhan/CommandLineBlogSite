@@ -1,7 +1,16 @@
 import dbi as d
+from getpass import getpass
 
 # Exception: username exceeds 100char
 class UsernameTooLong(Exception):
+    pass
+
+# Exception: username is not in database
+class NonExistentUsername(Exception):
+    pass
+
+# Exception: incorrect password
+class IncorrectPassword(Exception):
     pass
 
 # welcome message
@@ -11,8 +20,19 @@ print("")
 
 while True:
     try:
-        # username prompt
+        # username 
+        username = [] # this will clear the variable after loop
         username = input('Enter your username: ')
+
+        # grabbing key to compare to user input, username check is also triggered here
+        validate_key = d.BlogActions.login(username)[0][0] #IndexError means username not existent
+
+        # password prompt
+        password = getpass()
+        
+        # password check
+        if validate_key != password:
+            raise IncorrectPassword
 
         # conditional to determine if username entered is too long
         if len(username) > 100:
@@ -23,6 +43,17 @@ while True:
         print('The username you have entered is too long!')
         print('---------------------')
         print("")
+    except IndexError:
+        print("It looks like you aren't in the system...")
+        print("please try again")
+        print('---------------------')
+        print("")
+    except IncorrectPassword:
+        print("You have entered an incorrect password!")
+        print("please try again")
+        print('---------------------')
+        print("")
+
 
 print('Hello,', username)
 print("")
@@ -49,7 +80,7 @@ while True:
 
     # conditional to determine if function requires argument of username
     try:    
-        if selection is '1':
+        if selection == '1':
             options[selection](username)
         else:
             options[selection]()

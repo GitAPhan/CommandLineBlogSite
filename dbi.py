@@ -33,7 +33,11 @@ class BlogActions:
 
         blog_post = input('write your post: ')
 
-        cursor.execute(f'insert into blog_posts(username, content) values("{username}","{blog_post}")')
+        # grabbing the user_id
+        cursor.execute(f"select id from users where username = '{username}'")
+        user_id = cursor.fetchall()
+
+        cursor.execute(f'insert into blog_posts(user_id, content) values("{user_id[0][0]}","{blog_post}")')
         conn.commit()
 
         cursor.close()
@@ -71,5 +75,3 @@ class BlogActions:
         
         cursor.close()
         conn.close()
-
-BlogActions.create_user('username', 'password')
